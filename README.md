@@ -6,6 +6,12 @@ achievements, and a persistent per-user profile — built for the SDE Fullstack 
 
 **Stack:** Next.js 16 (TypeScript, App Router, Tailwind v4) · FastAPI (Python) · SQLAlchemy · SQLite
 
+**Live demo:** https://duolingo-clone-tau-blush.vercel.app
+**API:** https://duolingo-backend-production.up.railway.app (`/docs` for interactive Swagger UI)
+
+Frontend is deployed on Vercel; backend is deployed on Railway with a persistent volume mounted
+at `/data` so SQLite survives restarts (see `DB_PATH` in `backend/app/database.py`).
+
 ---
 
 ## Quick start
