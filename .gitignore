@@ -1,0 +1,22 @@
+# --- Python / backend ---
+backend/venv/
+backend/__pycache__/
+backend/app/__pycache__/
+backend/**/__pycache__/
+*.pyc
+backend/app.db
+
+# --- Node / frontend ---
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/tsconfig.tsbuildinfo
+frontend/next-env.d.ts
+frontend/.env.local
+frontend/.env*.local
+
+# --- Editor / OS ---
+.DS_Store
+.vscode/
+.idea/
