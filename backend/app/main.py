@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .database import Base, engine
 from .routers import course, dev, leaderboard, lessons, user
+from .seed import seed
 
 app = FastAPI(title="Duolingo Clone API", version="1.0.0")
 
@@ -18,6 +19,9 @@ app.add_middleware(
 @app.on_event("startup")
 def on_startup() -> None:
     Base.metadata.create_all(bind=engine)
+    # Auto-seed only on a genuinely empty database (e.g. a fresh deploy) —
+    # never wipes existing progress on a later restart. See seed.py.
+    seed(reset=False)
 
 
 app.include_router(course.router)

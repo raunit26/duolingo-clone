@@ -189,9 +189,24 @@ BOT_USERS = [
 ]
 
 
-def seed():
-    Base.metadata.drop_all(bind=engine)
+def seed(reset: bool = True):
+    """reset=True (the CLI default) drops and recreates every table — use for
+    local dev. reset=False only creates tables if missing and is a no-op if a
+    course already exists; this is what the deployed app calls on startup so
+    a cold start seeds an empty database exactly once without ever wiping
+    progress on a later restart."""
+    if reset:
+        Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
+
+    if not reset:
+        probe = SessionLocal()
+        try:
+            if probe.query(models.Course).first() is not None:
+                return  # already seeded — leave existing data alone
+        finally:
+            probe.close()
+
     db = SessionLocal()
     try:
         course = models.Course(language_name="Spanish", language_code="es", from_language="English", flag_emoji="🇪🇸")
